@@ -1,4 +1,11 @@
 # JYPageView
+功能说明
+-----
+iOS 多个UIViewController之间滑动切换
+
+显示效果
+-----
+![](https://github.com/majinyu888/JYPageView/blob/master/JYPageView.gif)
 
 使用方法
 -----
@@ -35,4 +42,3 @@
     [self.view addSubview:self.pageView];
 ```
 
-![](https://github.com/majinyu888/JYPageView/blob/master/JYPageView.gif)
