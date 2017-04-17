@@ -3,7 +3,7 @@
 使用方法
 -----
 #### 1.将JYPageView文件夹拷贝到您的项目
-#### 2.在需要使用的ViewController 
+#### 2.在需要使用的ViewController
      #import "JYPageView.h"
      #import "JYTitleView.h"
 #### 3.声明一个属性
@@ -19,7 +19,6 @@
     
     for (int i = 0; i < titles.count; i ++) {
         UIViewController *childVC = [[UIViewController alloc] init];
-        childVC.view.backgroundColor = [UIColor randomColor];
         [childVCs addObject:childVC];
     }
     
