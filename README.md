@@ -12,6 +12,7 @@
 ####4.禁止掉ViewController自身的一个属性
    self.automaticallyAdjustsScrollViewInsets = NO;
 ####5.添加到self.view上面即可
+
     NSArray *titles = @[@"视频", @"音乐", @"段子", @"新闻", @"体育", @"笑话", @"鬼故事"];
     NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
     
