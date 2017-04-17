@@ -34,3 +34,5 @@
                                  childViewControllers:childVCs style:style];
     [self.view addSubview:self.pageView];
 ```
+
+![](https://github.com/majinyu888/JYPageView/blob/master/JYPageView.gif)
