@@ -99,8 +99,8 @@ JYContentViewDelegate
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     [self.contentView.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:DidSelectedItemAtIndex:)]) {
-        [self.delegate JYPageView:self DidSelectedItemAtIndex:index];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:didSelectedItemAtIndex:)]) {
+        [self.delegate JYPageView:self didSelectedItemAtIndex:index];
     }
 }
 
@@ -124,8 +124,8 @@ JYContentViewDelegate
     
     [self.titleView updateTitleLableWithTargetIndex:index];
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:DidSelectedItemAtIndex:)]) {
-        [self.delegate JYPageView:self DidSelectedItemAtIndex:index];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:didSelectedItemAtIndex:)]) {
+        [self.delegate JYPageView:self didSelectedItemAtIndex:index];
     }
 }
 

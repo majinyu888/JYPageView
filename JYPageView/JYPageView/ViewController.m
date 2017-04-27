@@ -64,7 +64,7 @@ JYPageViewDelegate
 
 #pragma mark - Delegate
 
-- (void)JYPageView:(JYPageView *)pageView DidSelectedItemAtIndex:(NSInteger)index
+- (void)JYPageView:(JYPageView *)pageView didSelectedItemAtIndex:(NSInteger)index
 {
     NSLog(@"%ld", index);
 }
