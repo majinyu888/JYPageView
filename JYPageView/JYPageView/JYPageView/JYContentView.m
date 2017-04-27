@@ -7,22 +7,12 @@
 //
 
 #import "JYContentView.h"
-#import "JYTitleView.h"
 
 @interface JYContentView()<
 UICollectionViewDataSource,
 UICollectionViewDelegate,
-UICollectionViewDelegateFlowLayout,
-JYTitleViewDelegate
+UICollectionViewDelegateFlowLayout
 >
-
-@property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UIViewController *parentViewController;
-@property (nonatomic, strong) NSArray<UIViewController *> *childViewControllers;
-
-@property (nonatomic, assign) NSInteger currentIndex; // 当前vc的下标 默认是0
-@property (nonatomic, assign) BOOL isForbidScroll; // default is NO
-
 
 @end
 
@@ -129,14 +119,6 @@ static NSString *kContentCellID = @"kContentCellID";
     if (self.delegate && [self.delegate respondsToSelector:@selector(JYContentView:didSelectedItemAtIndex:)]) {
         [self.delegate JYContentView:self didSelectedItemAtIndex:_currentIndex];
     }
-}
-
-#pragma mark - JYTitleview Delegate
-
-- (void)JYTitleView:(JYTitleView *)titleView didSelectedItemAtIndex:(NSInteger)index
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 

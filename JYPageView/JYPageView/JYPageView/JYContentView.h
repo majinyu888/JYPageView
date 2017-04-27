@@ -28,6 +28,13 @@
 
 @property (nonatomic, weak) id<JYContentViewDelegate> delegate;
 
+@property (nonatomic, strong) UICollectionView *collectionView;//
+@property (nonatomic, strong) UIViewController *parentViewController;// 父VC
+@property (nonatomic, strong) NSArray<UIViewController *> *childViewControllers;//子VC
+
+@property (nonatomic, assign) NSInteger currentIndex; // 当前vc的下标 默认是0
+@property (nonatomic, assign) BOOL isForbidScroll; // default is NO
+
 /**
  初始化方法
  

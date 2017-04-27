@@ -7,10 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JYTitleView.h"
+#import "JYContentView.h"
 
-@class JYTitleStyle;
+@class JYPageView;
+
+@protocol JYPageViewDelegate <NSObject>
+
+@optional
+
+- (void)JYPageView:(JYPageView *)pageView DidSelectedItemAtIndex:(NSInteger)index;
+
+@end
 
 @interface JYPageView : UIView
+
+@property (nonatomic, weak) id<JYPageViewDelegate> delegate;
+
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, strong) NSArray<NSString *> *titles;
+@property (nonatomic, strong) NSArray<UIViewController *> *childs;
+@property (nonatomic, strong) UIViewController *parent;
+@property (nonatomic, strong) JYTitleStyle *style;
+@property (nonatomic, strong) JYTitleView *titleView;
+@property (nonatomic, strong) JYContentView *contentView;
 
 /**
  初始化pageView

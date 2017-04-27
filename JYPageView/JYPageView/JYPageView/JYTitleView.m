@@ -7,20 +7,8 @@
 //
 
 #import "JYTitleView.h"
-#import "JYContentView.h"
 
-@interface JYTitleView()<
-JYContentViewDelegate
->
-
-/// models
-@property (nonatomic, strong) NSArray<NSString *> *titles;
-@property (nonatomic, strong) JYTitleStyle *style;
-@property (nonatomic, assign) NSInteger currentIndex;
-
-/// UI
-@property (nonatomic, strong) UIScrollView *contentView;
-@property (nonatomic, strong) NSMutableArray<UIView *> *titleViews;
+@interface JYTitleView()
 
 @end
 
@@ -131,7 +119,6 @@ JYContentViewDelegate
     }
 }
 
-
 /**
  更新title的状态
  
@@ -171,12 +158,6 @@ JYContentViewDelegate
     }
 }
 
-#pragma mark - JYContentView Delegate
-
-- (void)JYContentView:(JYContentView *)contentView didSelectedItemAtIndex:(NSInteger)index
-{
-    [self updateTitleLableWithTargetIndex:index];
-}
 
 
 @end

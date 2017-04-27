@@ -30,6 +30,16 @@
 
 @property (nonatomic, weak) id<JYTitleViewDelegate> delegate;
 
+/// models
+@property (nonatomic, strong) NSArray<NSString *> *titles;
+@property (nonatomic, strong) JYTitleStyle *style;
+@property (nonatomic, assign) NSInteger currentIndex;
+
+/// UI
+@property (nonatomic, strong) UIScrollView *contentView;
+@property (nonatomic, strong) NSMutableArray<UIView *> *titleViews;
+
+
 /**
  初始化方法
  
@@ -46,6 +56,13 @@
  @return 当前对象实例
  */
 - (instancetype)initWithTitles:(NSArray<NSString *> *)titles style:(JYTitleStyle *)style;
+
+/**
+ 更新title的状态
+ 
+ @param targetIndex 点击的title的下标
+ */
+- (void)updateTitleLableWithTargetIndex:(NSInteger)targetIndex;
 
 @end
 

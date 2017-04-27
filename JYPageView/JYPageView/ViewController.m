@@ -8,11 +8,11 @@
 
 #import "ViewController.h"
 #import "JYPageView.h"
-#import "JYTitleView.h"
 #import "UIColor+RandomColor.h"
 
-@interface ViewController ()
-{
+@interface ViewController ()<
+JYPageViewDelegate
+>{
     NSArray *titles;
     NSMutableArray<UIViewController *> *childVCs;
 }
@@ -57,10 +57,17 @@
                                                titles:titles
                                  parentViewController:self
                                  childViewControllers:childVCs style:style];
+    self.pageView.delegate = self;
     [self.view addSubview:self.pageView];
 }
 
 
+#pragma mark - Delegate
+
+- (void)JYPageView:(JYPageView *)pageView DidSelectedItemAtIndex:(NSInteger)index
+{
+    NSLog(@"%ld", index);
+}
 
 
 @end

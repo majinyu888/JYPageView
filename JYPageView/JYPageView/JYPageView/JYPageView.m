@@ -7,17 +7,11 @@
 //
 
 #import "JYPageView.h"
-#import "JYTitleView.h"
-#import "JYContentView.h"
 
-@interface JYPageView()
-
-@property (nonatomic, strong) NSArray<NSString *> *titles;
-@property (nonatomic, strong) NSArray<UIViewController *> *childs;
-@property (nonatomic, strong) UIViewController *parent;
-@property (nonatomic, strong) JYTitleStyle *style;
-@property (nonatomic, strong) JYTitleView *titleView;
-@property (nonatomic, strong) JYContentView *contentView;
+@interface JYPageView()<
+JYTitleViewDelegate,
+JYContentViewDelegate
+>
 
 @end
 
@@ -54,8 +48,8 @@
         
         [self addSubview:self.titleView];
         [self addSubview:self.contentView];
-        self.titleView.delegate = (id<JYTitleViewDelegate>)self.contentView;
-        self.contentView.delegate = (id<JYContentViewDelegate>)self.titleView;
+        self.titleView.delegate = self;
+        self.contentView.delegate = self;
         
         return self;
     } else {
@@ -82,9 +76,58 @@
         _contentView = [[JYContentView alloc] initWithFrame:rect
                                        parentViewController:self.parent
                                        childViewControllers:self.childs];
-        _contentView.backgroundColor = [UIColor clearColor];
     }
     return _contentView;
 }
+
+#pragma mark - TitleView Delegate
+
+/**
+ 点击某个item的回调
+ 
+ @param titleView titleView
+ @param index 下标
+ */
+- (void)JYTitleView:(JYTitleView *)titleView didSelectedItemAtIndex:(NSInteger)index
+{
+    if (index == _currentIndex) {
+        return;
+    }
+    
+    _currentIndex = index;
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    [self.contentView.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:DidSelectedItemAtIndex:)]) {
+        [self.delegate JYPageView:self DidSelectedItemAtIndex:index];
+    }
+}
+
+#pragma mark - ContentView Delegate
+
+/**
+ 是否选中了某一个item, 当滑动结束的时候,也按照点击处理
+ 
+ @param contentView 当前实例对象
+ @param index 选中的下标
+ */
+#pragma mark - JYContentView Delegate
+
+- (void)JYContentView:(JYContentView *)contentView didSelectedItemAtIndex:(NSInteger)index
+{
+    if (index == _currentIndex) {
+        return;
+    }
+    
+    _currentIndex = index;
+    
+    [self.titleView updateTitleLableWithTargetIndex:index];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:DidSelectedItemAtIndex:)]) {
+        [self.delegate JYPageView:self DidSelectedItemAtIndex:index];
+    }
+}
+
 
 @end
