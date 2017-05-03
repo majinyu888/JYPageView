@@ -12,7 +12,6 @@ iOS 多个UIViewController之间滑动切换
 #### 1.将JYPageView文件夹拷贝到您的项目
 #### 2.在需要使用的ViewController
      #import "JYPageView.h"
-     #import "JYTitleView.h"
 #### 3.声明一个属性
     @property (nonatomic, strong) JYPageView *pageView;
 #### 4.禁止掉ViewController自身的一个属性
@@ -21,11 +20,17 @@ iOS 多个UIViewController之间滑动切换
 
 ``` Objective-C
 
-    NSArray *titles = @[@"视频", @"音乐", @"段子", @"新闻", @"体育", @"笑话", @"鬼故事"];
+   NSArray*  titles = @[@"测试测试测试测试测试",
+                         @"音乐音乐音乐音乐",
+                         @"段子段子段子",
+                         @"新闻",
+                         @"体"];
+    
     NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
     
     for (int i = 0; i < titles.count; i ++) {
         UIViewController *childVC = [[UIViewController alloc] init];
+        childVC.view.backgroundColor = [UIColor randomColor];
         [childVCs addObject:childVC];
     }
     
@@ -35,10 +40,24 @@ iOS 多个UIViewController之间滑动切换
                              self.view.frame.size.height - 64);
     
     JYTitleStyle *style = [JYTitleStyle defaultStyle];
+    style.titleHeight = 44;
     self.pageView = [[JYPageView alloc] initWithFrame:rect
+                                                style:style
                                                titles:titles
                                  parentViewController:self
-                                 childViewControllers:childVCs style:style];
+                                 childViewControllers:childVCs];
+    self.pageView.delegate = self;
     [self.view addSubview:self.pageView];
+
 ```
 
+#### 如果您想要监听滑动事件,可以声明并且实现代理:JYPageViewDelegate
+
+``` Objective-C
+#pragma mark - Delegate
+
+- (void)JYPageView:(JYPageView *)pageView didSelectedItemAtIndex:(NSInteger)index
+{
+    NSLog(@"%ld", index);
+}
+```
