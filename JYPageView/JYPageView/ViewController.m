@@ -12,10 +12,7 @@
 
 @interface ViewController ()<
 JYPageViewDelegate
->{
-    NSArray *titles;
-    NSMutableArray<UIViewController *> *childVCs;
-}
+>
 
 @property (nonatomic, strong) JYPageView *pageView;
 
@@ -34,13 +31,13 @@ JYPageViewDelegate
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    titles = @[@"测试测试测试测试测试",
-               @"音乐音乐音乐音乐",
-               @"段子段子段子",
-               @"新闻",
-               @"体"];
+    NSArray*  titles = @[@"测试测试测试测试测试",
+                         @"音乐音乐音乐音乐",
+                         @"段子段子段子",
+                         @"新闻",
+                         @"体"];
     
-    childVCs = [NSMutableArray array];
+    NSMutableArray<UIViewController *> *childVCs = [NSMutableArray array];
     
     for (int i = 0; i < titles.count; i ++) {
         UIViewController *childVC = [[UIViewController alloc] init];
