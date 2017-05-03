@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27692BC91EB1CC0800988D25 /* JYContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27692BC41EB1CC0800988D25 /* JYContentView.m */; };
-		27692BCA1EB1CC0800988D25 /* JYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27692BC61EB1CC0800988D25 /* JYPageView.m */; };
-		27692BCB1EB1CC0800988D25 /* JYTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27692BC81EB1CC0800988D25 /* JYTitleView.m */; };
+		2769A5D81EB973F200F584F3 /* JYContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2769A5D31EB973F200F584F3 /* JYContentView.m */; };
+		2769A5D91EB973F200F584F3 /* JYPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2769A5D51EB973F200F584F3 /* JYPageView.m */; };
+		2769A5DA1EB973F200F584F3 /* JYTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2769A5D71EB973F200F584F3 /* JYTitleView.m */; };
 		27B69A941EA4671200FECB8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B69A931EA4671200FECB8D /* main.m */; };
 		27B69A971EA4671200FECB8D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B69A961EA4671200FECB8D /* AppDelegate.m */; };
 		27B69A9A1EA4671200FECB8D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B69A991EA4671200FECB8D /* ViewController.m */; };
@@ -20,12 +20,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		27692BC31EB1CC0800988D25 /* JYContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContentView.h; sourceTree = "<group>"; };
-		27692BC41EB1CC0800988D25 /* JYContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContentView.m; sourceTree = "<group>"; };
-		27692BC51EB1CC0800988D25 /* JYPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPageView.h; sourceTree = "<group>"; };
-		27692BC61EB1CC0800988D25 /* JYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPageView.m; sourceTree = "<group>"; };
-		27692BC71EB1CC0800988D25 /* JYTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTitleView.h; sourceTree = "<group>"; };
-		27692BC81EB1CC0800988D25 /* JYTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTitleView.m; sourceTree = "<group>"; };
+		2769A5D21EB973F200F584F3 /* JYContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYContentView.h; sourceTree = "<group>"; };
+		2769A5D31EB973F200F584F3 /* JYContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYContentView.m; sourceTree = "<group>"; };
+		2769A5D41EB973F200F584F3 /* JYPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYPageView.h; sourceTree = "<group>"; };
+		2769A5D51EB973F200F584F3 /* JYPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYPageView.m; sourceTree = "<group>"; };
+		2769A5D61EB973F200F584F3 /* JYTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYTitleView.h; sourceTree = "<group>"; };
+		2769A5D71EB973F200F584F3 /* JYTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYTitleView.m; sourceTree = "<group>"; };
 		27B69A8F1EA4671200FECB8D /* JYPageView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JYPageView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27B69A931EA4671200FECB8D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27B69A951EA4671200FECB8D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -97,12 +97,12 @@
 		27B69AA91EA4672800FECB8D /* JYPageView */ = {
 			isa = PBXGroup;
 			children = (
-				27692BC31EB1CC0800988D25 /* JYContentView.h */,
-				27692BC41EB1CC0800988D25 /* JYContentView.m */,
-				27692BC51EB1CC0800988D25 /* JYPageView.h */,
-				27692BC61EB1CC0800988D25 /* JYPageView.m */,
-				27692BC71EB1CC0800988D25 /* JYTitleView.h */,
-				27692BC81EB1CC0800988D25 /* JYTitleView.m */,
+				2769A5D21EB973F200F584F3 /* JYContentView.h */,
+				2769A5D31EB973F200F584F3 /* JYContentView.m */,
+				2769A5D41EB973F200F584F3 /* JYPageView.h */,
+				2769A5D51EB973F200F584F3 /* JYPageView.m */,
+				2769A5D61EB973F200F584F3 /* JYTitleView.h */,
+				2769A5D71EB973F200F584F3 /* JYTitleView.m */,
 			);
 			path = JYPageView;
 			sourceTree = "<group>";
@@ -180,10 +180,10 @@
 			files = (
 				27B69A9A1EA4671200FECB8D /* ViewController.m in Sources */,
 				27B69A971EA4671200FECB8D /* AppDelegate.m in Sources */,
-				27692BCA1EB1CC0800988D25 /* JYPageView.m in Sources */,
+				2769A5D91EB973F200F584F3 /* JYPageView.m in Sources */,
 				27B69A941EA4671200FECB8D /* main.m in Sources */,
-				27692BCB1EB1CC0800988D25 /* JYTitleView.m in Sources */,
-				27692BC91EB1CC0800988D25 /* JYContentView.m in Sources */,
+				2769A5DA1EB973F200F584F3 /* JYTitleView.m in Sources */,
+				2769A5D81EB973F200F584F3 /* JYContentView.m in Sources */,
 				27B69AB51EA4672E00FECB8D /* UIColor+RandomColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

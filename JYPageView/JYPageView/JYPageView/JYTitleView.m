@@ -10,10 +10,22 @@
 
 @interface JYTitleView()
 
+/// models
+@property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
+@property (nonatomic, strong) JYTitleStyle *style;//样式
+@property (nonatomic, assign) NSInteger currentIndex;//当前下标
+
+/// UIs
+@property (nonatomic, strong) UIScrollView *contentView;//内容视图
+@property (nonatomic, strong) NSMutableArray<UIView *> *titleViews;//标题View数组
+@property (nonatomic, strong) UIView *flagView;//当前正在选中的标题View的标记
+
 @end
 
 
 @implementation JYTitleView
+
+#pragma mark - Init Methods
 
 - (instancetype)initWithTitles:(NSArray<NSString *> *)titles
 {
@@ -30,9 +42,10 @@
         self.titles = titles;
         if (!style) style = [JYTitleStyle defaultStyle];
         self.style = style;
+        style.titleHeight = titles.count == 1 ? 0 : style.titleHeight; /// 当只有一个title时,不显示顶部的titleView
         self.backgroundColor = style.backgroundColor;
         self.currentIndex = 0;
-        self.frame = CGRectMake(0, 0, style.titleWidth, style.titleHeight);
+        self.frame = CGRectMake(0, 0, style.titleWidth, titles.count == 1 ? 0 : style.titleHeight);/// 当只有一个title时,不显示顶部的titleView
         self.titleViews = [NSMutableArray array];
         
         /// scrollView
@@ -43,6 +56,11 @@
         [self addSubview:self.contentView];
         
         /**根据titles计算scrollView的contentSize*/
+        
+        /// 计算位置信息 X and Width - 默认配置
+        CGFloat offsetX01 = 0.0;
+        CGFloat titleWidth01 = 0.0;
+        
         for (int i = 0; i < titles.count; i ++) {
             UILabel *titleLabel = [[UILabel alloc] init];
             titleLabel.userInteractionEnabled = YES;
@@ -50,33 +68,26 @@
             titleLabel.textAlignment = NSTextAlignmentCenter;
             titleLabel.font = [UIFont systemFontOfSize:style.fontSize];
             titleLabel.text = titles[i];
-            if (i == 0) {
+            if (i == _currentIndex) {
                 titleLabel.textColor = style.selectedColor;
             } else {
                 titleLabel.textColor = style.defaultColor;
             }
-            /// 计算位置信息 X and Width
-            CGFloat offsetX = 0.0;
-            CGFloat titleWidth = 0.0;
             
             if (i == 0) {
-                offsetX = style.itemMargin/2;
+                offsetX01 = style.itemMargin/2;/// 第一个 -> 左边距/2
             } else {
-                offsetX = CGRectGetMaxX([self.titleViews lastObject].frame) + style.itemMargin;
+                offsetX01 = CGRectGetMaxX([self.titleViews lastObject].frame) + style.itemMargin;
             }
-            if (style.isScrollEnable) {
-                /// 可以滑动 (动态计算)
-                CGRect titleRect = [titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0)
-                                                                 options:NSStringDrawingUsesFontLeading
-                                                              attributes:@{NSFontAttributeName:titleLabel.font}
-                                                                 context:nil];
-                titleWidth = titleRect.size.width;
-            } else {
-                /// 不可以滑动 (等分)
-                titleWidth = (style.titleWidth - titles.count * style.itemMargin) / titles.count;
-            }
+            
+            /// 默认假设可以滑动 (动态计算)
+            CGRect titleRect = [titleLabel.text boundingRectWithSize:CGSizeMake(MAXFLOAT, 0)
+                                                             options:NSStringDrawingUsesFontLeading
+                                                          attributes:@{NSFontAttributeName:titleLabel.font}
+                                                             context:nil];
+            titleWidth01 = titleRect.size.width;
             /// 最终的frame
-            titleLabel.frame = CGRectMake(offsetX, 0, titleWidth, style.titleHeight);
+            titleLabel.frame = CGRectMake(offsetX01, 0, titleWidth01, style.titleHeight);
             
             /// 添加手势
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleTaped:)];
@@ -86,17 +97,71 @@
             [self.contentView addSubview:titleLabel];
         }
         
-        if (style.isScrollEnable) {
-            /// 最后一个titleLabel的最大 X + 0.5倍边距
-            self.contentView.contentSize = CGSizeMake(CGRectGetMaxX([self.titleViews lastObject].frame) + style.itemMargin/2, 0);
-        } else {
-            self.contentView.contentSize = CGSizeZero;
+        /// 最后一个 -> + 右边距/2
+        CGFloat maxX = CGRectGetMaxX([self.titleViews lastObject].frame) + style.itemMargin/2;
+        
+        if (maxX < style.titleWidth) { /// 说明没有到一屏幕宽,则按照屏幕等分
+            // X
+            CGFloat offsetX02 = 0.0;
+            //宽度
+            CGFloat titleWidth02 = (style.titleWidth - titles.count * style.itemMargin) / titles.count;
+            
+            /// 重新计算,X 和 宽度
+            for (int j = 0; j < self.titleViews.count; j ++) {
+                
+                if (j == 0) {
+                    offsetX02 = style.itemMargin/2;
+                } else {
+                    offsetX02 = style.itemMargin/2 + (titleWidth02 + style.itemMargin) * j;
+                }
+                
+                CGRect finishFrame = CGRectMake(offsetX02, 0, titleWidth02, style.titleHeight);
+                
+                UIView *v1 = self.titleViews[j];
+                v1.frame = finishFrame;
+                
+                UIView *v2 = self.contentView.subviews[j];
+                v2.frame = finishFrame;
+            }
         }
+        
+        /// flayView defalut
+        self.flagView = [[UIView alloc] init];
+        self.flagView.backgroundColor = style.selectedColor;
+        self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - 2, [self currentTilteView].frame.size.width, 2);
+        [self.contentView addSubview:self.flagView];
+        
+        /// 最后一个titleLabel的最大 X + 0.5倍边距
+        self.contentView.contentSize = CGSizeMake(CGRectGetMaxX([self.titleViews lastObject].frame) + style.itemMargin/2, 0);
         
         return self;
     } else {
         return nil;
     }
+}
+
+#pragma mark - Private Methods
+
+/**
+ 获取当前正在选中的View
+ 
+ @return label
+ */
+- (UIView *)currentTilteView
+{
+    return _titleViews[_currentIndex];
+}
+
+/**
+ 更新标识view的位置信息,要和选中的titleView保持同步
+ */
+- (void)updateFlagViewFrame
+{
+    UIView *currentLabel = [self currentTilteView];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.flagView.frame = CGRectMake(currentLabel.frame.origin.x, self.style.titleHeight - 2, currentLabel.frame.size.width, 2);
+    }];
 }
 
 
@@ -118,6 +183,8 @@
         [self.delegate JYTitleView:self didSelectedItemAtIndex:_currentIndex];
     }
 }
+
+#pragma mark - Public Methods
 
 /**
  更新title的状态
@@ -141,21 +208,22 @@
     /// 记录点击之后的 index
     _currentIndex = targetIndex;
     
-    /// 点击之后是否滑动来显示更多的内容
-    if (_style.isScrollEnable) {
-        
-        /// 被点击label的中心点位置 和 内容的总宽的中心点x坐标比较
-        CGFloat offsetX = targetLabel.center.x - self.contentView.bounds.size.width * 0.5;
-        if (offsetX < 0) {
-            /// 点击了左侧,并且中心点偏左部分,不需要滑动内容
-            offsetX = 0;
-        }
-        if (offsetX > self.contentView.contentSize.width - self.contentView.bounds.size.width) {
-            /// 点击了右侧,并且中心点偏右部分,需要滑动内容
-            offsetX = self.contentView.contentSize.width - self.contentView.bounds.size.width;
-        }
-        [self.contentView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    /// 被点击label的中心点位置 和 内容的总宽的中心点x坐标比较
+    CGFloat offsetX = targetLabel.center.x - self.contentView.bounds.size.width * 0.5;
+    if (offsetX < 0) {
+        /// 点击了左侧,并且中心点偏左部分,不需要滑动内容
+        offsetX = 0;
     }
+    
+    if (offsetX > self.contentView.contentSize.width - self.contentView.bounds.size.width) {
+        /// 点击了右侧,并且中心点偏右部分,需要滑动内容
+        offsetX = self.contentView.contentSize.width - self.contentView.bounds.size.width;
+    }
+    
+    [self.contentView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    
+    /// 更新标志View的位置
+    [self updateFlagViewFrame];
 }
 
 
@@ -171,9 +239,8 @@
     
     style.titleHeight = 44;
     style.titleWidth = [UIScreen mainScreen].bounds.size.width;
-    style.itemMargin = 30;
-    style.fontSize = 15;
-    style.isScrollEnable = YES;
+    style.itemMargin = 10;
+    style.fontSize = 14;
     style.defaultColor = [UIColor darkGrayColor];
     style.selectedColor = [UIColor redColor];
     style.backgroundColor = [UIColor groupTableViewBackgroundColor];

@@ -30,15 +30,7 @@
 
 @property (nonatomic, weak) id<JYTitleViewDelegate> delegate;
 
-/// models
-@property (nonatomic, strong) NSArray<NSString *> *titles;
-@property (nonatomic, strong) JYTitleStyle *style;
-@property (nonatomic, assign) NSInteger currentIndex;
-
-/// UI
-@property (nonatomic, strong) UIScrollView *contentView;
-@property (nonatomic, strong) NSMutableArray<UIView *> *titleViews;
-
+#pragma mark - Init Methods
 
 /**
  初始化方法
@@ -56,6 +48,8 @@
  @return 当前对象实例
  */
 - (instancetype)initWithTitles:(NSArray<NSString *> *)titles style:(JYTitleStyle *)style;
+
+#pragma mark - Public Methods
 
 /**
  更新title的状态
@@ -83,19 +77,14 @@
 @property (nonatomic, assign) CGFloat titleWidth;
 
 /**
- margin for item, defalut is 30
+ margin for item, defalut is 10
  */
 @property (nonatomic, assign) CGFloat itemMargin;
 
 /**
- font size, defalut is 15
+ font size, defalut is 14
  */
 @property (nonatomic, assign) CGFloat fontSize;
-
-/**
- whether the titleView can scrollable, defalut is YES
- */
-@property (nonatomic, assign) BOOL isScrollEnable;
 
 /**
  color of title's nomal state, defalut is [UIColor darkGrayColor]

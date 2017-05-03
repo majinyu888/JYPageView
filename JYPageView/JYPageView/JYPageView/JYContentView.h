@@ -13,7 +13,6 @@
 @protocol JYContentViewDelegate <NSObject>
 
 @optional
-
 /**
  是否选中了某一个item, 当滑动结束的时候,也按照点击处理
  
@@ -28,12 +27,7 @@
 
 @property (nonatomic, weak) id<JYContentViewDelegate> delegate;
 
-@property (nonatomic, strong) UICollectionView *collectionView;//
-@property (nonatomic, strong) UIViewController *parentViewController;// 父VC
-@property (nonatomic, strong) NSArray<UIViewController *> *childViewControllers;//子VC
-
-@property (nonatomic, assign) NSInteger currentIndex; // 当前vc的下标 默认是0
-@property (nonatomic, assign) BOOL isForbidScroll; // default is NO
+#pragma mark - init
 
 /**
  初始化方法
@@ -46,5 +40,15 @@
 - (instancetype)initWithFrame:(CGRect)frame
          parentViewController:(UIViewController *)parent
          childViewControllers:(NSArray <UIViewController *>*)childs;
+
+#pragma mark - update
+
+/**
+ 滑动到指定的indexPath
+ 
+ @param index 目标indexPath
+ @param animate 是否动画
+ */
+- (void)updateScrollIndex:(NSInteger)index animate:(BOOL)animate;
 
 @end

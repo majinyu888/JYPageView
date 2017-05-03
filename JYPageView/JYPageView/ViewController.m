@@ -27,16 +27,18 @@ JYPageViewDelegate
 {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(reloadJYPageView)];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    titles = @[@"视频",
-               @"音乐",
-               @"段子",
+    titles = @[@"测试测试测试测试测试",
+               @"音乐音乐音乐音乐",
+               @"段子段子段子",
                @"新闻",
-               @"体育",
-               @"笑话",
-               @"鬼故事",
-               @"测试信息测试信息测试信息测试信息测试信息"];
+               @"体"];
     
     childVCs = [NSMutableArray array];
     
@@ -54,13 +56,27 @@ JYPageViewDelegate
     JYTitleStyle *style = [JYTitleStyle defaultStyle];
     style.titleHeight = 44;
     self.pageView = [[JYPageView alloc] initWithFrame:rect
+                                                style:style
                                                titles:titles
                                  parentViewController:self
-                                 childViewControllers:childVCs style:style];
+                                 childViewControllers:childVCs];
     self.pageView.delegate = self;
     [self.view addSubview:self.pageView];
 }
 
+
+/// 重新加载页面
+- (void)reloadJYPageView
+{
+    NSArray *title1s = @[@"测试信息测试信息",@"Movies"];
+    NSMutableArray *ma = [NSMutableArray array];
+    for (int i = 0; i < title1s.count; i ++) {
+        UIViewController *childVC = [[UIViewController alloc] init];
+        childVC.view.backgroundColor = [UIColor randomColor];
+        [ma addObject:childVC];
+    }
+    [self.pageView reloadWithTitles:title1s childs:ma];
+}
 
 #pragma mark - Delegate
 

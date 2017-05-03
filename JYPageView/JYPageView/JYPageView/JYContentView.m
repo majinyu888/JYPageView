@@ -14,12 +14,19 @@ UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout
 >
 
+@property (nonatomic, strong) UICollectionView *collectionView;//
+@property (nonatomic, strong) UIViewController *parentViewController;// 父VC
+@property (nonatomic, strong) NSArray<UIViewController *> *childViewControllers;//子VC
+
+@property (nonatomic, assign) NSInteger currentIndex; // 当前vc的下标 默认是0
+@property (nonatomic, assign) BOOL isForbidScroll; // default is NO
+
 @end
 
 
 @implementation JYContentView
 
-#pragma mark - Public Methods
+#pragma mark - init
 
 - (instancetype)initWithFrame:(CGRect)frame
          parentViewController:(UIViewController *)parent
@@ -43,7 +50,7 @@ UICollectionViewDelegateFlowLayout
     }
 }
 
-#pragma mark - CollectonView
+#pragma mark - Getter CollectonView
 
 static NSString *kContentCellID = @"kContentCellID";
 
@@ -114,11 +121,27 @@ static NSString *kContentCellID = @"kContentCellID";
         return;
     }
     
+    /// 记录当前下标
     _currentIndex = (NSInteger)(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
     
+    /// delegate 回调
     if (self.delegate && [self.delegate respondsToSelector:@selector(JYContentView:didSelectedItemAtIndex:)]) {
         [self.delegate JYContentView:self didSelectedItemAtIndex:_currentIndex];
     }
+}
+
+#pragma mark - update
+
+/**
+ 滑动到指定的indexPath
+ 
+ @param index 目标indexPath
+ @param animate 是否动画
+ */
+- (void)updateScrollIndex:(NSInteger)index animate:(BOOL)animate;
+{
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:animate];
+    
 }
 
 

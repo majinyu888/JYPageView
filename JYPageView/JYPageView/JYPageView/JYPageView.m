@@ -13,9 +13,19 @@ JYTitleViewDelegate,
 JYContentViewDelegate
 >
 
+@property (nonatomic, assign) NSInteger currentIndex;//当前下标
+@property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
+@property (nonatomic, strong) NSArray<UIViewController *> *childs;//子UIViewController数组
+@property (nonatomic, strong) UIViewController *parent;//父UIViewController
+@property (nonatomic, strong) JYTitleStyle *style;//标题视图的样式
+@property (nonatomic, strong) JYTitleView *titleView;//标题视图
+@property (nonatomic, strong) JYContentView *contentView;//内容视图
+
 @end
 
 @implementation JYPageView
+
+#pragma mark - init
 
 - (instancetype)initWithFrame:(CGRect)frame
                        titles:(NSArray<NSString *> *)titles
@@ -23,17 +33,17 @@ JYContentViewDelegate
          childViewControllers:(NSArray<UIViewController *> *)childs
 {
     return [self initWithFrame:frame
+                         style:nil
                         titles:titles
           parentViewController:parent
-          childViewControllers:childs
-                         style:nil];
+          childViewControllers:childs];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
+                        style:(JYTitleStyle *)style
                        titles:(NSArray<NSString *> *)titles
          parentViewController:(UIViewController *)parent
          childViewControllers:(NSArray<UIViewController *> *)childs
-                        style:(JYTitleStyle *)style
 {
     if (!titles) return nil;
     if (!parent) return nil;
@@ -56,6 +66,8 @@ JYContentViewDelegate
         return nil;
     }
 }
+
+#pragma mark - Getter
 
 - (JYTitleView *)titleView
 {
@@ -80,7 +92,45 @@ JYContentViewDelegate
     return _contentView;
 }
 
-#pragma mark - TitleView Delegate
+#pragma mark - reload
+
+/**
+ 重新刷新页面信息
+ 
+ @param titles 新的titles数组
+ @param childs 新的childs数组
+ */
+- (void)reloadWithTitles:(NSArray *)titles childs:(NSArray<UIViewController *> *)childs
+{
+    /// 1.清空
+    /// 2.恢复默认值
+    /// 3.重新添加
+    
+    if (_titleView) {
+        _titleView.delegate = nil;
+        [_titleView removeFromSuperview];
+        _titleView = nil;
+    }
+    
+    if (_contentView) {
+        _contentView.delegate = nil;
+        [_contentView removeFromSuperview];
+        _contentView = nil;
+    }
+    
+    _currentIndex = 0;
+    
+    self.titles = titles;
+    self.childs = childs;
+    
+    [self addSubview:self.titleView];
+    [self addSubview:self.contentView];
+    
+    self.titleView.delegate = self;
+    self.contentView.delegate = self;
+}
+
+#pragma mark - JYTitleView Delegate
 
 /**
  点击某个item的回调
@@ -94,17 +144,19 @@ JYContentViewDelegate
         return;
     }
     
+    /// 记录当前下标
     _currentIndex = index;
     
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    [self.contentView.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    /// 将对应的内容视图跳转到对应的下标
+    [self.contentView updateScrollIndex:index animate:NO];
     
+    /// 如果实现了代理,代理还可以做额外的操作
     if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:didSelectedItemAtIndex:)]) {
         [self.delegate JYPageView:self didSelectedItemAtIndex:index];
     }
 }
 
-#pragma mark - ContentView Delegate
+#pragma mark - JYContentView Delegate
 
 /**
  是否选中了某一个item, 当滑动结束的时候,也按照点击处理
@@ -120,10 +172,13 @@ JYContentViewDelegate
         return;
     }
     
+    /// 记录当前下标
     _currentIndex = index;
     
+    /// 更新标题选中状态
     [self.titleView updateTitleLableWithTargetIndex:index];
     
+    /// 如果实现了代理,代理还可以做额外的操作
     if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:didSelectedItemAtIndex:)]) {
         [self.delegate JYPageView:self didSelectedItemAtIndex:index];
     }
