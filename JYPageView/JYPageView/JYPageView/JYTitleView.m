@@ -132,7 +132,7 @@
             }
         }
         
-        /// flayView defalut
+        /// flagView defalut
         self.flagView = [[UIView alloc] init];
         self.flagView.backgroundColor = style.selectedColor;
         self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - 2, [self currentTilteView].frame.size.width, 2);
