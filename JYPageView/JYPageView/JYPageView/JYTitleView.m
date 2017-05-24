@@ -42,10 +42,14 @@
         self.titles = titles;
         if (!style) style = [JYTitleStyle defaultStyle];
         self.style = style;
+        
         if (titles.count == 1) {
             style.titleHeight = 0.0;/// 当只有一个title时,不显示顶部的titleView
+        } else {
+            if (style.titleHeight == 0.0) {
+                style.titleHeight = [JYTitleStyle defaultStyle].titleHeight;
+            }
         }
-        style.titleHeight = style.titleHeight; /// 当只有一个title时,不显示顶部的titleView
         self.backgroundColor = style.backgroundColor;
         self.currentIndex = 0;
         self.frame = CGRectMake(0, 0, style.titleWidth,style.titleHeight);
