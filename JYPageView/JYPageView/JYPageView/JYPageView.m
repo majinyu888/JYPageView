@@ -16,7 +16,7 @@ JYContentViewDelegate
 @property (nonatomic, assign) NSInteger currentIndex;//当前下标
 @property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
 @property (nonatomic, strong) NSArray<UIViewController *> *childs;//子UIViewController数组
-@property (nonatomic, strong) UIViewController *parent;//父UIViewController
+@property (nonatomic, weak) UIViewController *parent;//父UIViewController
 @property (nonatomic, strong) JYTitleStyle *style;//标题视图的样式
 @property (nonatomic, strong) JYTitleView *titleView;//标题视图
 @property (nonatomic, strong) JYContentView *contentView;//内容视图
