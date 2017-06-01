@@ -11,8 +11,8 @@
 @interface JYTitleView()
 
 /// models
-@property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
 @property (nonatomic, strong) JYTitleStyle *style;//样式
+@property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
 @property (nonatomic, assign) NSInteger currentIndex;//当前下标
 
 /// UIs
@@ -132,7 +132,7 @@
             }
         }
         
-        /// flagView defalut
+        /// flayView defalut
         self.flagView = [[UIView alloc] init];
         self.flagView.backgroundColor = style.selectedColor;
         self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - 2, [self currentTilteView].frame.size.width, 2);
@@ -146,6 +146,7 @@
         return nil;
     }
 }
+
 
 #pragma mark - Private Methods
 

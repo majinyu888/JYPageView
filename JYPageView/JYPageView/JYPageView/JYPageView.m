@@ -14,9 +14,17 @@ JYContentViewDelegate
 >
 
 @property (nonatomic, assign) NSInteger currentIndex;//当前下标
-@property (nonatomic, strong) NSArray<NSString *> *titles;//标题数组
-@property (nonatomic, strong) NSArray<UIViewController *> *childs;//子UIViewController数组
+
+/*
+ * why weak -> 只负责传值, 不负责销毁
+ */
+@property (nonatomic, weak) NSArray<NSString *> *titles;//标题数组
+@property (nonatomic, weak) NSArray<UIViewController *> *childs;//子UIViewController数组
 @property (nonatomic, weak) UIViewController *parent;//父UIViewController
+
+/*
+ * why strong -> 负责销毁
+ */
 @property (nonatomic, strong) JYTitleStyle *style;//标题视图的样式
 @property (nonatomic, strong) JYTitleView *titleView;//标题视图
 @property (nonatomic, strong) JYContentView *contentView;//内容视图
@@ -67,6 +75,8 @@ JYContentViewDelegate
     }
 }
 
+
+
 #pragma mark - Getter
 
 - (JYTitleView *)titleView
@@ -105,6 +115,8 @@ JYContentViewDelegate
     /// 1.清空
     /// 2.恢复默认值
     /// 3.重新添加
+    
+    
     
     if (_titleView) {
         _titleView.delegate = nil;

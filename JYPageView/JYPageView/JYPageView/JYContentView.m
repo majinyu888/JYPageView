@@ -14,9 +14,16 @@ UICollectionViewDelegate,
 UICollectionViewDelegateFlowLayout
 >
 
+/*
+ * why weak -> 本身不负责销毁, 由它的父视图(JYPageView)控制
+ */
+@property (nonatomic, weak) UIViewController *parentViewController;// 父VC
+
+/*
+ * why strong -> 本身负责销毁
+ */
 @property (nonatomic, strong) UICollectionView *collectionView;//
-@property (nonatomic, strong) UIViewController *parentViewController;// 父VC
-@property (nonatomic, weak) NSArray<UIViewController *> *childViewControllers;//子VC
+@property (nonatomic, strong) NSArray<UIViewController *> *childViewControllers;//子VC
 
 @property (nonatomic, assign) NSInteger currentIndex; // 当前vc的下标 默认是0
 @property (nonatomic, assign) BOOL isForbidScroll; // default is NO
@@ -36,7 +43,6 @@ UICollectionViewDelegateFlowLayout
     if (!childs) return nil;
     
     if (self = [super initWithFrame:frame]) {
-        self.parentViewController = parent;
         self.childViewControllers = childs;
         ///
         for (UIViewController *vc in self.childViewControllers) {
@@ -49,6 +55,7 @@ UICollectionViewDelegateFlowLayout
         return nil;
     }
 }
+
 
 #pragma mark - Getter CollectonView
 
