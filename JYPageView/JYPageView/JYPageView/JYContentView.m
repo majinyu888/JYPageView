@@ -43,6 +43,8 @@ UICollectionViewDelegateFlowLayout
     if (!childs) return nil;
     
     if (self = [super initWithFrame:frame]) {
+        
+        self.parentViewController = parent;
         self.childViewControllers = childs;
         ///
         for (UIViewController *vc in self.childViewControllers) {
