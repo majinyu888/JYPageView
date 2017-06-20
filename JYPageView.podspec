@@ -1,16 +1,11 @@
-Pod::Spec.new do |s|
-s.name               = 'JYPageView'
-s.version            = '1.0.0'
-s.summary            = 'A paged View for ViewControllers'
-s.homepage           = 'https://github.com/majinyu888/JYPageView'
-s.license            = 'MIT'
-s.platform           = 'ios'
-s.author             = {'majinyu' => '511151071@163.com'}
-s.ios.deployment_target = '8.0'
-s.source             = {:git => 'https://github.com/majinyu888/JYPageView.git', :tag => s.version}
-s.source_files       = 'JYPageView/*.{h,m}'
-s.resources          = 'JYPageView/*.{png,xib,nib,bundle}'
-s.requires_arc       = true
-s.frameworks         = 'UIKit'
+Pod::Spec.new do |spec|
+  spec.name         = 'JYPageView'
+  spec.version      = '1.0.0'
+  spec.license      = { :type => 'MIT' }
+  spec.homepage     = 'https://github.com/majinyu888/JYPageView'
+  spec.authors      = { 'Ma Jin Yu' => '511151071@163.com' }
+  spec.summary      = 'A paged View for ViewControllers'
+  spec.source       = { :git => 'https://github.com/majinyu888/JYPageView.git', :tag => 'v1.0.0' }
+  spec.source_files = 'JYPageView.{h,m}'
+  spec.framework    = 'UIKit'
 end
-
