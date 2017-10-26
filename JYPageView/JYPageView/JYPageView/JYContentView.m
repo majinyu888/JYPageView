@@ -147,7 +147,7 @@ static NSString *kContentCellID = @"kContentCellID";
  @param index 目标indexPath
  @param animate 是否动画
  */
-- (void)updateScrollIndex:(NSInteger)index animate:(BOOL)animate;
+- (void)updateScrollIndex:(NSInteger)index animate:(BOOL)animate
 {
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:animate];
     
