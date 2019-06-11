@@ -30,6 +30,8 @@
 
 @property (nonatomic, weak) id<JYPageViewDelegate> delegate;
 
+@property (nonatomic, assign) NSInteger currentIndex; //当前下标 - 可以设置成你想要的下标
+
 #pragma mark - init
 
 /**

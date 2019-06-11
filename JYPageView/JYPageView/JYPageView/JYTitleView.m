@@ -75,7 +75,7 @@
             titleLabel.textAlignment = NSTextAlignmentCenter;
             titleLabel.font = [UIFont systemFontOfSize:style.fontSize];
             titleLabel.text = titles[i];
-            if (i == _currentIndex) {
+            if (i == _currentIndex && style.isIntegrated) {
                 titleLabel.textColor = style.selectedColor;
             } else {
                 titleLabel.textColor = style.defaultColor;
@@ -135,7 +135,20 @@
         /// flayView defalut
         self.flagView = [[UIView alloc] init];
         self.flagView.backgroundColor = style.selectedColor;
-        self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - 2, [self currentTilteView].frame.size.width, 2);
+        
+        if (_style.isFlagViewTranslucent) {
+            self.flagView.alpha = 0.5;
+            self.flagView.layer.cornerRadius = _style.flagViewHeight / 2.0;
+        } else {
+            self.flagView.alpha = 1;
+            self.flagView.layer.cornerRadius = 0;
+        }
+        if (_style.isIntegrated) {
+            self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - _style.flagViewHeight, [self currentTilteView].frame.size.width, _style.flagViewHeight);
+        } else {
+            ///
+            self.flagView.frame = CGRectMake([self currentTilteView].frame.origin.x, self.style.titleHeight - _style.flagViewHeight - _style.flagViewBottomMargin, [self currentTilteView].frame.size.width, _style.flagViewHeight);
+        }
         [self.contentView addSubview:self.flagView];
         
         /// 最后一个titleLabel的最大 X + 0.5倍边距
@@ -165,10 +178,15 @@
  */
 - (void)updateFlagViewFrame
 {
+    
     UIView *currentLabel = [self currentTilteView];
     
     [UIView animateWithDuration:0.25 animations:^{
-        self.flagView.frame = CGRectMake(currentLabel.frame.origin.x, self.style.titleHeight - 2, currentLabel.frame.size.width, 2);
+        if (self.style.isIntegrated) {
+            self.flagView.frame = CGRectMake(currentLabel.frame.origin.x, self.style.titleHeight - self.style.flagViewHeight, currentLabel.frame.size.width, self.style.flagViewHeight);
+        } else {
+            self.flagView.frame = CGRectMake(currentLabel.frame.origin.x, self.style.titleHeight - self.style.flagViewHeight - self.style.flagViewBottomMargin, currentLabel.frame.size.width, self.style.flagViewHeight);
+        }
     }];
 }
 
@@ -211,7 +229,11 @@
     UILabel *targetLabel = (UILabel *)_titleViews[targetIndex];
     
     sourceLabel.textColor = _style.defaultColor;
-    targetLabel.textColor = _style.selectedColor;
+    if (_style.isIntegrated) {
+        targetLabel.textColor = _style.selectedColor;
+    } else {
+        targetLabel.textColor = _style.defaultColor;
+    }
     
     /// 记录点击之后的 index
     _currentIndex = targetIndex;
@@ -252,6 +274,10 @@
     style.defaultColor = [UIColor darkGrayColor];
     style.selectedColor = [UIColor redColor];
     style.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    style.isIntegrated = YES;
+    style.flagViewBottomMargin = 0;
+    style.flagViewHeight = 2;
+    style.isFlagViewTranslucent = NO;
     
     return style;
 }

@@ -13,8 +13,6 @@ JYTitleViewDelegate,
 JYContentViewDelegate
 >
 
-@property (nonatomic, assign) NSInteger currentIndex;//当前下标
-
 /*
  * why weak -> 只负责传值, 不负责销毁
  */
@@ -102,6 +100,15 @@ JYContentViewDelegate
     return _contentView;
 }
 
+#pragma mark - Setter
+
+- (void)setCurrentIndex:(NSInteger)currentIndex {
+    _currentIndex = currentIndex;
+    [self.titleView updateTitleLableWithTargetIndex:_currentIndex];
+    [self.contentView updateScrollIndex:_currentIndex animate:NO];
+}
+
+
 #pragma mark - reload
 
 /**
@@ -115,8 +122,6 @@ JYContentViewDelegate
     /// 1.清空
     /// 2.恢复默认值
     /// 3.重新添加
-    
-    
     
     if (_titleView) {
         _titleView.delegate = nil;

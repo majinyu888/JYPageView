@@ -51,13 +51,20 @@ JYPageViewDelegate
                              self.view.frame.size.height - 64);
     
     JYTitleStyle *style = [JYTitleStyle defaultStyle];
+    style.fontSize = 17;
     style.titleHeight = 44;
+    style.isIntegrated = NO;
+    style.flagViewBottomMargin = 12;
+    style.flagViewHeight = 5;
+    style.isFlagViewTranslucent = YES;
+    
     self.pageView = [[JYPageView alloc] initWithFrame:rect
                                                 style:style
                                                titles:titles
                                  parentViewController:self
                                  childViewControllers:childVCs];
     self.pageView.delegate = self;
+    self.pageView.currentIndex = 2;
     [self.view addSubview:self.pageView];
 }
 

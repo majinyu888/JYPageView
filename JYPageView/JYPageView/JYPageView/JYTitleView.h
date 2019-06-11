@@ -102,6 +102,26 @@
 @property (nonatomic, strong) UIColor *backgroundColor;
 
 /**
+ identity whether the title and flagView is integrated, defalut is YES
+ */
+@property (nonatomic, assign) BOOL isIntegrated;
+
+/**
+ bottom margin for flagView, defalut is 2 , if is isIntegrated , please fix this value
+ */
+@property (nonatomic, assign) CGFloat flagViewBottomMargin;
+
+/**
+ height for flagView, defalut is 2
+ */
+@property (nonatomic, assign) CGFloat flagViewHeight;
+
+/**
+ identity whether the flagView is translucent, defalut is NO
+ */
+@property (nonatomic, assign) BOOL isFlagViewTranslucent;
+
+/**
  defaultStyle
  
  @return defaultStyle
