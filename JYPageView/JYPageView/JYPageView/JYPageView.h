@@ -30,6 +30,12 @@
 
 @property (nonatomic, weak) id<JYPageViewDelegate> delegate;
 
+/*
+ * why strong -> 负责销毁
+ */
+@property (nonatomic, strong) JYTitleStyle *style;//标题视图的样式
+@property (nonatomic, strong) JYTitleView *titleView;//标题视图
+@property (nonatomic, strong) JYContentView *contentView;//内容视图
 @property (nonatomic, assign) NSInteger currentIndex; //当前下标 - 可以设置成你想要的下标
 
 #pragma mark - init
@@ -73,6 +79,14 @@
  @param childs 新的childs数组
  */
 - (void)reloadWithTitles:(NSArray *)titles childs:(NSArray<UIViewController *> *)childs;
+
+
+/**
+ 更新内容试图的frame
+
+ @param rect rect
+ */
+- (void)updateContentViewWithFrame: (CGRect)rect;
 
 
 @end

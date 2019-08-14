@@ -20,13 +20,6 @@ JYContentViewDelegate
 @property (nonatomic, weak) NSArray<UIViewController *> *childs;//子UIViewController数组
 @property (nonatomic, weak) UIViewController *parent;//父UIViewController
 
-/*
- * why strong -> 负责销毁
- */
-@property (nonatomic, strong) JYTitleStyle *style;//标题视图的样式
-@property (nonatomic, strong) JYTitleView *titleView;//标题视图
-@property (nonatomic, strong) JYContentView *contentView;//内容视图
-
 @end
 
 @implementation JYPageView
@@ -51,26 +44,17 @@ JYContentViewDelegate
          parentViewController:(UIViewController *)parent
          childViewControllers:(NSArray<UIViewController *> *)childs
 {
-    if (!titles) return nil;
-    if (!parent) return nil;
-    if (!childs) return nil;
-    
     if (self = [super initWithFrame:frame]) {
-        
         self.titles = titles;
         self.childs = childs;
         self.parent = parent;
         self.style = style == nil ? [JYTitleStyle defaultStyle] : style;
-        
         [self addSubview:self.titleView];
         [self addSubview:self.contentView];
         self.titleView.delegate = self;
         self.contentView.delegate = self;
-        
-        return self;
-    } else {
-        return nil;
     }
+    return self;
 }
 
 
@@ -88,10 +72,23 @@ JYContentViewDelegate
 - (JYContentView *)contentView
 {
     if (!_contentView) {
-        CGRect rect = CGRectMake(0,
-                                 self.style.titleHeight,
-                                 self.style.titleWidth,
-                                 self.bounds.size.height - self.style.titleHeight);
+        CGRect rect = CGRectZero;
+        if (self.style.isShowInNavigationBar) {
+            /// 在导航栏中显示..
+            /// 默认内容视图宽度为屏幕的宽度
+            rect = CGRectMake(0,
+                              self.style.titleViewHeight + self.style.bottomLineHeight,
+                              [UIScreen mainScreen].bounds.size.width,
+                              self.bounds.size.height - self.style.titleViewHeight - self.style.bottomLineHeight);
+        } else {
+            /// 不在导航栏中显示..
+            /// 默认内容视图宽度为样式的宽度
+            /// 这里高度好像也不准了...
+            rect = CGRectMake(0,
+                              self.style.titleViewHeight + self.style.bottomLineHeight,
+                              self.style.titleViewWidth,
+                              self.bounds.size.height - self.style.titleViewHeight - self.style.bottomLineHeight);
+        }
         
         _contentView = [[JYContentView alloc] initWithFrame:rect
                                        parentViewController:self.parent
@@ -147,6 +144,23 @@ JYContentViewDelegate
     self.contentView.delegate = self;
 }
 
+- (void)updateContentViewWithFrame: (CGRect)rect {
+    if (!_contentView) {
+        return;
+    }
+    /// 清理contentView
+    _contentView.delegate = nil;
+    [_contentView removeFromSuperview];
+    _contentView = nil;
+    
+    /// 重新添加
+    _contentView = [[JYContentView alloc] initWithFrame:rect
+                                   parentViewController:self.parent
+                                   childViewControllers:self.childs];
+    _contentView.delegate = self;
+    [self addSubview:_contentView];
+}
+
 #pragma mark - JYTitleView Delegate
 
 /**
@@ -165,7 +179,7 @@ JYContentViewDelegate
     _currentIndex = index;
     
     /// 将对应的内容视图跳转到对应的下标
-    [self.contentView updateScrollIndex:index animate:NO];
+    [self.contentView updateScrollIndex:index animate:YES];
     
     /// 如果实现了代理,代理还可以做额外的操作
     if (self.delegate && [self.delegate respondsToSelector:@selector(JYPageView:didSelectedItemAtIndex:)]) {

@@ -52,7 +52,7 @@ JYPageViewDelegate
     
     JYTitleStyle *style = [JYTitleStyle defaultStyle];
     style.fontSize = 17;
-    style.titleHeight = 44;
+    style.titleViewHeight = 44;
     style.isIntegrated = NO;
     style.flagViewBottomMargin = 12;
     style.flagViewHeight = 5;

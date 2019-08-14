@@ -30,6 +30,10 @@
 
 @property (nonatomic, weak) id<JYTitleViewDelegate> delegate;
 
+
+/// override
+@property(nonatomic, assign) CGSize intrinsicContentSize;
+
 #pragma mark - Init Methods
 
 /**
@@ -48,6 +52,14 @@
  @return 当前对象实例
  */
 - (instancetype)initWithTitles:(NSArray<NSString *> *)titles style:(JYTitleStyle *)style;
+
+
+/**
+ 返回内容的真实宽度
+
+ @return 真实宽度
+ */
+- (CGFloat)trueWidth;
 
 #pragma mark - Public Methods
 
@@ -69,12 +81,12 @@
 /**
  height of titleView, defalut is 44
  */
-@property (nonatomic, assign) CGFloat titleHeight;
+@property (nonatomic, assign) CGFloat titleViewHeight;
 
 /**
  width of titleView, defalut is ScreenWidth
  */
-@property (nonatomic, assign) CGFloat titleWidth;
+@property (nonatomic, assign) CGFloat titleViewWidth;
 
 /**
  margin for item, defalut is 10
@@ -97,7 +109,7 @@
 @property (nonatomic, strong) UIColor *selectedColor;
 
 /**
- color of titleView background, defalut is [UIColor groupTableViewBackgroundColor]
+ color of titleView background, defalut is [UIColor whiteColor]
  */
 @property (nonatomic, strong) UIColor *backgroundColor;
 
@@ -120,6 +132,21 @@
  identity whether the flagView is translucent, defalut is NO
  */
 @property (nonatomic, assign) BOOL isFlagViewTranslucent;
+
+/**
+ height for bottomLine, defalut is 1
+ */
+@property (nonatomic, assign) CGFloat bottomLineHeight;
+
+/**
+ color for bottomLine, defalut is [UIColor groupTableViewBackgroundColor]
+ */
+@property (nonatomic, strong) UIColor *bottomLineColor;
+
+/**
+ identity whether the titiView is show in naviationbar, defalut is NO
+ */
+@property (nonatomic, assign) BOOL isShowInNavigationBar;
 
 /**
  defaultStyle
