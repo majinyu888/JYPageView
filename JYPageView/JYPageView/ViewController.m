@@ -45,15 +45,18 @@ JYPageViewDelegate
         [childVCs addObject:childVC];
     }
     
+    
+    CGFloat top_h = self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
     CGRect rect = CGRectMake(0,
-                             64,
+                             top_h,
                              self.view.frame.size.width,
-                             self.view.frame.size.height - 64);
+                             self.view.frame.size.height - top_h);
     
     JYTitleStyle *style = [JYTitleStyle defaultStyle];
     style.fontSize = 17;
-    style.titleViewHeight = 44;
+    style.titleViewHeight = 80;
     style.isIntegrated = NO;
+    
     style.flagViewBottomMargin = 12;
     style.flagViewHeight = 5;
     style.isFlagViewTranslucent = YES;
